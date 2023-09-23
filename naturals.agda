@@ -44,13 +44,11 @@ _ =
   ∎
     
 
-_*_ : ℕ → ℕ → ℕ
-zero * n = zero
-(suc m) * n = n + (m * n)
+
 
 _ : 3 * 4 ≡ 12
 _ =
-  begin
+G  begin
     3 * 4
   ≡⟨⟩
     4 + (2 * 4)
@@ -177,10 +175,32 @@ to : ℕ → Bin
 to zero = ⟨⟩ O
 to (suc n) = inc (to n)
 
+_*_ : ℕ → ℕ → ℕ
+zero * n = zero
+(suc m) * n = n + (m * n)
+
 from : Bin → ℕ
-from ⟨⟩ = {!!}
-from (b O) = {!!}
-from (b I) = {!!}
+from ⟨⟩   = zero
+from (b O) = 2 * from b
+from (b I) = suc (2 * from b)
+
+_ : from (⟨⟩ I O O) ≡ 4
+_ =
+  begin
+    from (⟨⟩ I O O)
+  ≡⟨⟩
+    2 * from(⟨⟩ I O)
+  ≡⟨⟩
+    2 * (2 * from(⟨⟩ I))
+  ≡⟨⟩
+    2 * (2 * suc (2 * from(⟨⟩)))
+  ≡⟨⟩
+    2 * (2 * suc (2 * zero))
+  ≡⟨⟩
+    2 * (2 * suc (zero))
+  ≡⟨⟩
+    2 * (2 * 1)
+  ∎
 
 _ : to 4 ≡ ⟨⟩ I O O
 _ =
